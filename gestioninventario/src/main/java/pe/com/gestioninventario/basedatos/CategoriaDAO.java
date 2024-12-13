@@ -29,15 +29,7 @@ public class CategoriaDAO {
       conn = Conexion.getConexion();
       stmt = conn.prepareStatement(SQL_SELECT);
       rs = stmt.executeQuery();
-      while (rs.next()) {
-        int idCategoria = rs.getInt("idCategoria");
-        String nombre = rs.getString("nombre");
-        String estado = rs.getString("estado");
-        Date fechaCreacion = rs.getDate("fechaCreacion");
-        Date fechaModificacion = rs.getDate("fechaModificacion");
-        categoria = new Categoria(idCategoria, nombre, estado, fechaCreacion, fechaModificacion);
-        categorias.add(categoria);
-      }
+      mostrarCategoriasRecursiva(rs, categorias);
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
@@ -54,6 +46,22 @@ public class CategoriaDAO {
     
     
   }
+
+  // recursividad para mostrarCategoria
+  public List<Categoria> mostrarCategoriasRecursiva(ResultSet rs, List<Categoria> categorias) throws SQLException {
+    if (!rs.next()) {
+        return categorias;
+    }
+    int idCategoria = rs.getInt("idCategoria");
+    String nombre = rs.getString("nombre");
+    String estado = rs.getString("estado");
+    Date fechaCreacion = rs.getDate("fechaCreacion");
+    Date fechaModificacion = rs.getDate("fechaModificacion");
+    Categoria categoria = new Categoria(idCategoria, nombre, estado, fechaCreacion, fechaModificacion);
+    categorias.add(categoria);
+    return mostrarCategoriasRecursiva(rs, categorias);
+}
+  
 
   // insertar
   public int insertarCategoria(Categoria categoria) throws Exception {
