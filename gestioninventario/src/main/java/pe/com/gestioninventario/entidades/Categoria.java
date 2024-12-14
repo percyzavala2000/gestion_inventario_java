@@ -1,6 +1,7 @@
 package pe.com.gestioninventario.entidades;
 import java.sql.Date;
 
+
 public class Categoria {
     private int idCategoria;
     private String nombre;
@@ -17,9 +18,10 @@ public class Categoria {
         this.idCategoria = idCategoria;
        
     }
-    public Categoria(int idCategoria, String nombre) {
+    public Categoria(int idCategoria, String nombre,String estado) {
         this.idCategoria = idCategoria;
         this.nombre = nombre;
+        this.estado = estado;
     }
 
     public Categoria(int idCategoria, String nombre,  String estado, Date fechaCreacion, Date fechaModificacion) {

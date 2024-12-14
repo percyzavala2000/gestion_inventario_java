@@ -48,6 +48,8 @@ public class FrmGestionCategoria extends javax.swing.JInternalFrame {
         txt_nombre_categoria = new javax.swing.JTextField();
         btn_actualizar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        ComboBox_estado = new javax.swing.JComboBox<>();
         jLabel_wallpaper = new javax.swing.JLabel();
 
         setClosable(true);
@@ -103,8 +105,8 @@ public class FrmGestionCategoria extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica Neue", 0, 14), new java.awt.Color(102, 102, 102)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica Neue", 0, 14), new java.awt.Color(153, 153, 153))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("Categoria:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+        jLabel2.setText("Estado:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
         txt_nombre_categoria.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica Neue", 0, 13), new java.awt.Color(102, 102, 102))); // NOI18N
         jPanel2.add(txt_nombre_categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 53, 130, 30));
@@ -116,7 +118,7 @@ public class FrmGestionCategoria extends javax.swing.JInternalFrame {
                 btn_actualizarActionPerformed(evt);
             }
         });
-        jPanel2.add(btn_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+        jPanel2.add(btn_actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         btn_eliminar.setBackground(new java.awt.Color(255, 51, 51));
         btn_eliminar.setText("Eliminar");
@@ -125,7 +127,13 @@ public class FrmGestionCategoria extends javax.swing.JInternalFrame {
                 btn_eliminarActionPerformed(evt);
             }
         });
-        jPanel2.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 90, -1));
+        jPanel2.add(btn_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 90, -1));
+
+        jLabel3.setText("Categoria:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        ComboBox_estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Habilitado", "Deshabilitado" }));
+        jPanel2.add(ComboBox_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 130, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 190, 250));
 
@@ -141,7 +149,9 @@ public class FrmGestionCategoria extends javax.swing.JInternalFrame {
       }else{
         int idCategoria = Integer.parseInt(tabla_categoria.getValueAt(tabla_categoria.getSelectedRow(), 0).toString());
         String nombre = txt_nombre_categoria.getText();
-        Categoria categoria = new Categoria(idCategoria, nombre);
+        String estado = ComboBox_estado.getSelectedItem().toString();
+        
+        Categoria categoria = new Categoria( idCategoria, nombre, estado);
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         try {
           categoriaDAO.actualizarCategoria(categoria);
@@ -184,7 +194,7 @@ public class FrmGestionCategoria extends javax.swing.JInternalFrame {
     int idCategoria = Integer.parseInt(tabla_categoria.getValueAt(fila, 0).toString());
     Categoria categoria = new Categoria(idCategoria);
     try {
-      categoria = categoriaDAO.buscarCategoria(categoria);
+      categoria = categoriaDAO.buscarCategoria( categoria.getIdCategoria());
       txt_nombre_categoria.setText(categoria.getNombre());
     } catch (Exception e) {
       e.printStackTrace();
@@ -224,10 +234,12 @@ public class FrmGestionCategoria extends javax.swing.JInternalFrame {
   //
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBox_estado;
     private javax.swing.JButton btn_actualizar;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel_wallpaper;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

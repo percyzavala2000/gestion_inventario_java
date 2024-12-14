@@ -4,14 +4,6 @@
  */
 package pe.com.gestioninventario;
 
-import java.sql.Date;
-
-import pe.com.gestioninventario.basedatos.CategoriaDAO;
-import pe.com.gestioninventario.basedatos.Login;
-import pe.com.gestioninventario.basedatos.PersonaDAO;
-import pe.com.gestioninventario.basedatos.UsuarioDAO;
-import pe.com.gestioninventario.entidades.Categoria;
-import pe.com.gestioninventario.entidades.Persona;
 import pe.com.gestioninventario.presentacion.FrmLogin;
 
 
@@ -21,7 +13,7 @@ import pe.com.gestioninventario.presentacion.FrmLogin;
  */
 public class Inicio {
     public static void main(String[] args) throws Exception {
-      Date fechaActual = new Date(System.currentTimeMillis());
+    
       
       FrmLogin frmLogin = new FrmLogin();
       frmLogin.setVisible(true);
