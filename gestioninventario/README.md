@@ -12,7 +12,7 @@ Este proyecto es un sistema de gestión de inventario desarrollado en Java. Perm
 
 ## Tecnologías Utilizadas
 
-- **Java 8**
+- **Java **
 - **MySQL**
 - **JDBC**
 - **Git**
@@ -24,7 +24,7 @@ El proyecto está organizado en los siguientes paquetes:
 - **basedatos**: Contiene las clases de acceso a datos.
 - **entidades**: Contiene las clases de entidades del negocio.
 - **presentacion**: Contiene las clases de presentación.
-- **utilidades**: Contiene las clases de utilidades.
+- **imagenes**: Contiene las imagenes.
 
 ## Instalación y Ejecución
 
@@ -32,15 +32,15 @@ Sigue estos pasos para instalar y ejecutar el proyecto:
 
 1. Clona el repositorio utilizando el siguiente comando:
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/percyzavala2000/gestion_inventario_java.git
    ```
 
-2. Importa el proyecto en un IDE como **Eclipse** o **NetBeans**.
+2. Importa el proyecto en un IDE como **VSC** o **NetBeans**.
 
 3. Configura la conexión a la base de datos en el archivo `Conexion.java`:
    - Proporciona las credenciales correctas para tu base de datos MySQL.
 
-4. Ejecuta la aplicación desde el archivo `Main.java`.
+4. Ejecuta la aplicación desde el archivo `Inicio.java`.
 
 ## Contribuciones
 
