@@ -4,9 +4,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 
 import pe.com.gestioninventario.entidades.Persona;
 
@@ -17,14 +16,13 @@ public class PersonaDAO {
   private static final String SQL_UPDATE = "UPDATE gestioninventario.Persona SET nombres = ?, apellidoPaterno = ?, apellidoMaterno = ?, dni = ?, telefono = ?, correo = ?, direccion = ?, estado = ?, fechaModificacion = ? WHERE id = ?";
   private static final String SQL_DELETE = "DELETE FROM gestioninventario.Persona WHERE id = ?";
   private static final String SQL_BUSCAR = "SELECT id, nombres, apellidoPaterno, apellidoMaterno, dni, telefono, correo, direccion, estado, fechaCreacion, fechaModificacion FROM gestioninventario.Persona WHERE id = ?";
-
+  LinkedList<Persona> personas = new LinkedList<>();
   // mostrar persona                                                                            
-  public List<Persona> mostrarPersona() throws Exception {
+  public LinkedList<Persona> mostrarPersona() throws Exception {
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
     Persona persona = null;
-    List<Persona> personas = new ArrayList<Persona>();
 
     try {
       conn = Conexion.getConexion();
@@ -88,6 +86,7 @@ public class PersonaDAO {
 
       registros = stmt.executeUpdate();
       System.out.println("Registro insertado correctamente" + persona);
+      personas.add(persona);
     } catch (SQLException e) {
       e.printStackTrace();
       System.out.println("Error al insertar registro" + e.getMessage());
@@ -129,7 +128,15 @@ public class PersonaDAO {
       stmt.setInt(10, persona.getId());
       registros = stmt.executeUpdate();
       System.out.println("Registro actualizado correctamente" + persona);
-    } catch (SQLException e) {
+      for(Persona p:personas){
+        if(p.getId()==persona.getId()){
+          p=persona;
+          break;
+        }
+      }
+    }
+
+     catch (SQLException e) {
       e.printStackTrace();
       System.out.println("Error al actualizar registro" + e.getMessage());
     } finally {
@@ -158,6 +165,7 @@ public class PersonaDAO {
     } catch (SQLException e) {
       e.printStackTrace();
       System.out.println("Error al eliminar registro" + e.getMessage());
+      personas.remove(persona);
     } finally {
       try {
         Conexion.close(conn);
@@ -176,6 +184,13 @@ public class PersonaDAO {
     PreparedStatement stmt = null;
     ResultSet rs = null;
     Persona personaEncontrada = null;
+
+    for (Persona p : personas) {
+      if (p.getId() == persona.getId()) {
+        personaEncontrada = p;
+        break;
+      }
+    }
 
 
     try {
@@ -199,6 +214,7 @@ public class PersonaDAO {
         personaEncontrada = new Persona(id, nombres, apellidoPaterno, apellidoMaterno, dni, telefono, correo, direccion, estado,
             fechaCreacion, fechaModificacion);
         System.out.println("Persona encontrada" + personaEncontrada);
+        personas.add(personaEncontrada);
 
 
       }
