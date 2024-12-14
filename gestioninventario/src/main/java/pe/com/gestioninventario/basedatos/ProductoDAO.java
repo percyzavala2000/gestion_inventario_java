@@ -2,17 +2,16 @@ package pe.com.gestioninventario.basedatos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import pe.com.gestioninventario.basedatos.Conexion;
 import pe.com.gestioninventario.entidades.Producto;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 
 import java.util.List;
-import java.util.ArrayList;
 /**
  * Clase que permite realizar operaciones de base de datos para la entidad Producto
  */
 
-
+//SE agrego Colas USANDO Listas enlazadas dobles 
 
 
 public class ProductoDAO {
@@ -22,6 +21,11 @@ private static final String SQL_EXISTE="SELECT * FROM gestioninventario.Producto
 private static final String SQL_BUSCAR="SELECT * FROM gestioninventario.Producto WHERE id = ?";
 private static final String SQL_ACTUALIZAR="UPDATE gestioninventario.Producto SET nombre = ?, descripcion = ?, precio = ?, cantidad = ?, categoria = ?, marca = ?, estado = ? WHERE id = ?";
 private static final String SQL_ELIMINAR="DELETE FROM gestioninventario.Producto WHERE id = ?"; 
+private LinkedList<Producto> colaProductos;
+
+public ProductoDAO(){
+  colaProductos = new LinkedList<>();
+}
   
 //mostarProducto
 public List<Producto> mostrarProducto() throws Exception {
@@ -29,7 +33,7 @@ public List<Producto> mostrarProducto() throws Exception {
   PreparedStatement stmt = null;
   ResultSet rs = null;
   Producto producto = null;
-  List<Producto> productos = new ArrayList<Producto>();
+  List<Producto> productos = new LinkedList<>();
   try {
     conn = Conexion.getConexion();
     stmt = conn.prepareStatement(SQL_SELECT);
@@ -45,6 +49,7 @@ public List<Producto> mostrarProducto() throws Exception {
       String estado = rs.getString("estado");
       producto = new Producto( id, nombre, descripcion, precio, cantidad, categoria, marca, estado);
       productos.add(producto);
+      colaProductos.add(producto);
     }
     System.out.println("Registros mostrados correctamente" + productos);
   } catch (SQLException e) {
@@ -81,6 +86,9 @@ public void insertarProducto(String nombre, String descripcion, double precio, i
     stmt.setString(7, estado);
     stmt.executeUpdate();
     System.out.println("Registro insertado correctamente");
+    //agregar a la cola
+    Producto producto = new Producto(nombre, descripcion, precio, cantidad, categoria, marca, estado);
+    colaProductos.addLast(producto);
   } catch (SQLException e) {
     e.printStackTrace();
     System.out.println("Error al insertar registro" + e.getMessage());

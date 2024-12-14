@@ -24,6 +24,16 @@ public class Producto extends EntidadBase {
   public Producto(int id) {
     this.id = id;
   }
+  public Producto(String nombre, String descripcion, double precio,int cantidad, String categoria, String marca, String estado) {
+    
+    this.nombre = nombre;
+    this.descripcion = descripcion;
+    this.precio = precio;
+    this.cantidad = cantidad;
+    this.categoria = categoria;
+    this.marca = marca;
+    this.estado = estado;
+  }
   public Producto(int id,String nombre, String descripcion, double precio,int cantidad, String categoria, String marca, String estado) {
     this.id = id;
     this.nombre = nombre;
